@@ -8,6 +8,7 @@ class HandleCollision(Enum):
     UPDATE = 1
     OVERWRITE = 2
     ERROR = 3
+    IGNORE = 4
 
 
 class Submission:
@@ -103,6 +104,8 @@ class Submission:
         existing_entity: Entity = self.__map[entity_type][index]
         if self.__collider == HandleCollision.OVERWRITE:
             existing_entity.attributes = attributes
-        else:  # Default is UPDATE
+        elif self.__collider == HandleCollision.UPDATE:
             existing_entity.attributes.update(attributes)
+        elif self.__collider == HandleCollision.IGNORE:
+            pass
         return existing_entity
