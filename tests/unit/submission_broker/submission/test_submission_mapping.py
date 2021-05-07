@@ -3,6 +3,15 @@ from submission_broker.submission.submission import Submission, HandleCollision
 
 
 class TestSubmissionMapping(unittest.TestCase):
+    def setUp(self) -> None:
+        self.entity_type = 'test'
+        self.index = 'index'
+        self.collision_type = [
+            HandleCollision.UPDATE,
+            HandleCollision.OVERWRITE,
+            HandleCollision.IGNORE
+        ]
+
     def test_mapping_identical_index_update_should_return_same_entity(self):
         submission = Submission(HandleCollision.UPDATE)
         entity_type = "test_case"
@@ -60,6 +69,15 @@ class TestSubmissionMapping(unittest.TestCase):
         submission.map(entity_type, index, {})
         with self.assertRaises(IndexError):
             submission.map(entity_type, index, {})
+
+    def test_mapping_identical_index_should_ignore_entity_attributes(self):
+        submission = Submission(HandleCollision.IGNORE)
+        attributes1 = {'first_entity': 'kept'}
+        attributes2 = {'second_entity': 'ignored'}
+        expected_attributes = {'first_entity': 'kept'}
+        entity = submission.map(self.entity_type, self.index, attributes1)
+        submission.map(self.entity_type, self.index, attributes2)
+        self.assertDictEqual(expected_attributes, entity.attributes)
 
     def test_has_data_should_start_false(self):
         submission = Submission()
