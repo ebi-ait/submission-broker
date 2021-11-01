@@ -9,6 +9,8 @@ class TestSubmissionAccessions(unittest.TestCase):
         self.maxDiff = None
         self.__setup_mock_entities()
 
+        self.biostudies_accession = "BST1"
+
     def test_when_entities_has_accessions_returns_them_by_type(self):
         expected_accession_by_type = {
             'BioSamples': {'SAME123', 'SAME456', 'SAME789'},
@@ -18,7 +20,7 @@ class TestSubmissionAccessions(unittest.TestCase):
         submission = Submission()
 
         study = submission.map("study", "study", self.study)
-        study.add_accession('BioStudies', "BST1")
+        study.add_accession('BioStudies', self.biostudies_accession)
 
         sample1 = submission.map("sample", "sample1", self.sample1)
         sample1.add_accession('BioSamples', "SAME123")
@@ -33,6 +35,14 @@ class TestSubmissionAccessions(unittest.TestCase):
         run_experiment.add_accession('ENA', "EXP123")
 
         self.assertEqual(expected_accession_by_type, submission.get_all_accessions())
+
+    def test_when_add_accession_to_entity_then_accession_set_in_attributes(self):
+        submission = Submission()
+
+        study = submission.map("study", "study", self.study)
+        study.add_accession('BioStudies', self.biostudies_accession)
+
+        self.assertEqual(study.attributes.get('accession'), self.biostudies_accession)
 
     def __setup_mock_entities(self):
         self.study = {
