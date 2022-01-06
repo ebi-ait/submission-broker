@@ -42,7 +42,6 @@ class Entity:
 
     def add_accession(self, service: str, accession_value: str):
         self.__accessions[service] = accession_value
-        self.attributes.update({'accession': accession_value})
 
     def get_accession(self, service: str) -> str:
         return self.__accessions.get(service, None)

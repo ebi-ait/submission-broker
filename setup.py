@@ -12,7 +12,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='submission-broker',
-    version='0.1.2',
+    version='0.2.0',
     description="A library written in Python to handle brokering submission into EBI archives.",
     long_description=long_description,
     long_description_content_type="text/markdown",

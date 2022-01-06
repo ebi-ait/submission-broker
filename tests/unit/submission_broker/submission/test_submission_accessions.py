@@ -36,14 +36,6 @@ class TestSubmissionAccessions(unittest.TestCase):
 
         self.assertEqual(expected_accession_by_type, submission.get_all_accessions())
 
-    def test_when_add_accession_to_entity_then_accession_set_in_attributes(self):
-        submission = Submission()
-
-        study = submission.map("study", "study", self.study)
-        study.add_accession('BioStudies', self.biostudies_accession)
-
-        self.assertEqual(study.attributes.get('accession'), self.biostudies_accession)
-
     def __setup_mock_entities(self):
         self.study = {
             "study_accession": "PRJEB12345",
